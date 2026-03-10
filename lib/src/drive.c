@@ -101,37 +101,15 @@ void turn_until_line(int speed, int direction) {
     stop_driving();
     msleep(50);
 
-    if (direction == 1) { 
-        // --- TURN RIGHT ---
-        drive(speed, -speed); 
-        
-        // Phase 1: Trailing sensor (Left) crosses the CURRENT line
-        while (!is_left_black()) { msleep(10); }  // Quickly sees black...
-        while (is_left_black()) { msleep(10); }   // ...then goes back to white.
+    int l_pwr = (direction == 1) ? speed : -speed;
+    int r_pwr = (direction == 1) ? -speed : speed;
+    drive(l_pwr, r_pwr);
 
-        // Phase 2: Leading sensor (Right) approaches the NEW line
-        while (!is_right_black()) { msleep(10); } // Sees black...
-        
-        // Phase 3: Leading sensor (Right) crosses the NEW line
-        while (is_right_black()) { msleep(10); }  // ...goes back to white.
-        // At this exact moment, the Left sensor is about to hit black. We are hugging the line!
-        
-    } else {              
-        // --- TURN LEFT ---
-        drive(-speed, speed);
 
-        // Phase 1: Trailing sensor (Right) crosses the CURRENT line
-        while (!is_right_black()) { msleep(10); } // Quickly sees black...
-        while (is_right_black()) { msleep(10); }  // ...then goes back to white.
-
-        // Phase 2: Leading sensor (Left) approaches the NEW line
-        while (!is_left_black()) { msleep(10); }  // Sees black...
-
-        // Phase 3: Leading sensor (Left) crosses the NEW line
-        while (is_left_black()) { msleep(10); }   // ...goes back to white.
-        // At this exact moment, the Right sensor is about to hit black.
-    }
-
+    while (!is_left_black() && !is_right_black()) { msleep(10); } 
+    while (is_left_black() || is_right_black()) { msleep(10); } // Escape current line
+    while (!is_left_black() && !is_right_black()) { msleep(10); } //find the line again
+    while (is_left_black() || is_right_black()) { msleep(10); }
 }
 
 void line_follow_until_cross(int base_speed, int turn_speed) {
@@ -152,7 +130,7 @@ void line_follow_until_cross(int base_speed, int turn_speed) {
             drive(base_speed + turn_speed, base_speed - turn_speed);
         } 
         else {
-            // Straddling the line perfectly (both white)
+            // both white
             drive(base_speed, base_speed);
         }
         

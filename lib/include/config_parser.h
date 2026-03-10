@@ -10,6 +10,7 @@ typedef struct {
     int right_threshold;
     int left_black_is_low;
     int right_black_is_low;
+    int sensor_offset; // 1 for Front, -1 for Back
 } RobotConfig;
 
 // Loads the config from the text file into the struct

@@ -16,6 +16,9 @@ int main(void) {
     int l_thresh, r_thresh;
     int lblack_is_low, rblack_is_low;
 
+    // Line Sensor location
+    int sensor_offset, offset_choice;
+
     printf("MANUAL ROBOT CALIBRATION\n\n");
 
     // STEP 1: PORT CONFIGURATION
@@ -49,11 +52,15 @@ int main(void) {
     printf("Type the WHITE value you saw for RIGHT: ");
     scanf("%d", &r_white);
 
+    printf("\nSensor Position:\n [1] In Front of Wheels\n [2] Behind Wheels\n Choice: ");
+    scanf("%d", &offset_choice);
+
     // Calculations
     l_thresh = (l_black + l_white) / 2;
     r_thresh = (r_black + r_white) / 2;
     lblack_is_low = (l_black < l_white);
     rblack_is_low = (r_black < r_white);
+    sensor_offset = (offset_choice == 1) ? 1 : -1;
 
     // STEP 3: SAVE
     FILE *fp = fopen("../data/robot_config.txt", "w");
@@ -66,6 +73,7 @@ int main(void) {
     fprintf(fp, "L_SENSOR_PORT %d\nR_SENSOR_PORT %d\n", left_sensor, right_sensor);
     fprintf(fp, "L_THRESH %d\nR_THRESH %d\n", l_thresh, r_thresh);
     fprintf(fp, "LBLACK_IS_LOW %d\nRBLACK_IS_LOW %d\n", lblack_is_low, rblack_is_low);
+    fprintf(fp, "SENSOR_OFFSET %d\n", sensor_offset);
 
     fclose(fp);
     printf("\nCalibration saved successfully!\n");

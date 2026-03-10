@@ -12,12 +12,13 @@ int load_config(RobotConfig *config, const char *filename) {
     while (fscanf(fp, "%s %d", key, &val) != EOF) {
         if (strcmp(key, "L_MOTOR") == 0) config->left_motor = val;
         else if (strcmp(key, "R_MOTOR") == 0) config->right_motor = val;
-        else if (strcmp(key, "L_PORT") == 0) config->left_sensor_port = val;
-        else if (strcmp(key, "R_PORT") == 0) config->right_sensor_port = val;
+        else if (strcmp(key, "L_SENSOR_PORT") == 0) config->left_sensor_port = val;
+        else if (strcmp(key, "R_SENSOR_PORT") == 0) config->right_sensor_port = val;
         else if (strcmp(key, "L_THRESH") == 0) config->left_threshold = val;
         else if (strcmp(key, "R_THRESH") == 0) config->right_threshold = val;
-        else if (strcmp(key, "L_LOW") == 0) config->left_black_is_low = val;
-        else if (strcmp(key, "R_LOW") == 0) config->right_black_is_low = val;
+        else if (strcmp(key, "LBLACK_IS_LOW") == 0) config->left_black_is_low = val;
+        else if (strcmp(key, "RBLACK_IS_LOW") == 0) config->right_black_is_low = val;
+        else if (strcmp(key, "SENSOR_OFFSET") == 0) config->sensor_offset = val;
     }
 
     fclose(fp);
