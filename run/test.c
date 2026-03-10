@@ -5,8 +5,8 @@
 #define R_MOTOR 0
 #define L_SENSOR_PORT 1
 #define R_SENSOR_PORT 0
-#define L_THRESH 3540
-#define R_THRESH 3067
+#define L_THRESH 3650
+#define R_THRESH 3250
 #define LBLACK_IS_LOW 0
 #define RBLACK_IS_LOW 0
 

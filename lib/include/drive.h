@@ -3,15 +3,20 @@
 
 #include "config_parser.h"
 
+#define ACCEL_STEP 2
+#define RAMP_INTERVAL_MS 10
+
 void drive_init(RobotConfig *config);
 
 // Basic Sensor Wrappers 
 int is_left_black();
 int is_right_black();
 
-// Basic Movement
-void drive(int left_speed, int right_speed);
+// Accalaration Movement
+void drive_ramped(int left_target, int right_target, int instant);
 void stop_driving();
+
+void update_ramping();
 
 // Orientation Movement
 void drive_until_black(int speed);
