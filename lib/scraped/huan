@@ -2,7 +2,7 @@
 #include <kipr/wombat.h>
 #include <stdlib.h>
 
-// ====== CONFIG ======
+// CONFIG
 #define LEFT_SENSOR_PORT   1   // analog
 #define RIGHT_SENSOR_PORT  0   // analog
 

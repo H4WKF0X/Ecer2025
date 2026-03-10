@@ -1,0 +1,25 @@
+#include "config_parser.h"
+#include <stdio.h>
+#include <string.h>
+
+int load_config(RobotConfig *config, const char *filename) {
+    FILE *fp = fopen(filename, "r");
+    if (fp == NULL) return 0;
+
+    char key[50];
+    int val;
+    
+    while (fscanf(fp, "%s %d", key, &val) != EOF) {
+        if (strcmp(key, "L_MOTOR") == 0) config->left_motor = val;
+        else if (strcmp(key, "R_MOTOR") == 0) config->right_motor = val;
+        else if (strcmp(key, "L_PORT") == 0) config->left_sensor_port = val;
+        else if (strcmp(key, "R_PORT") == 0) config->right_sensor_port = val;
+        else if (strcmp(key, "L_THRESH") == 0) config->left_threshold = val;
+        else if (strcmp(key, "R_THRESH") == 0) config->right_threshold = val;
+        else if (strcmp(key, "L_LOW") == 0) config->left_black_is_low = val;
+        else if (strcmp(key, "R_LOW") == 0) config->right_black_is_low = val;
+    }
+
+    fclose(fp);
+    return 1;
+}

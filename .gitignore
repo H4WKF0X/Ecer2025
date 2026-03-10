@@ -1,0 +1,16 @@
+# Compiled Binaries and Objects
+*.exe
+*.o
+*.out
+*.app
+build/
+bin/
+
+# IDE Specific (VS Code) 
+.vscode/
+*.code-workspace
+
+# OS Specific
+Thumbs.db
+.DS_Store
+desktop.ini
