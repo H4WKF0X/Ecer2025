@@ -9,7 +9,11 @@
 #include <sys/socket.h>
 #include <fcntl.h>
 
-// ====== CONFIG ======
+/** 
+ * This is the code used in our framework to test the TCP Connection
+ * TODO: write a general Server-Client Model implementation
+ */
+
 #define LEFT_SENSOR_PORT   1   // analog
 #define RIGHT_SENSOR_PORT  0   // analog
 
@@ -30,7 +34,6 @@
 // Loop-Timing
 #define DT_MS              10
 
-// ====== 8er-Synchronisation ======
 // Rolle dieses Roboters: 1 = Vorrang, 0 = Nachrang
 #define PRIORITY_ROLE         0
 // Wartezeit des Nachrang-Bots, nachdem der Vorrang-Bot losfährt (tunen!)
