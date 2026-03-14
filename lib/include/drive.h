@@ -12,20 +12,22 @@ void drive_init(RobotConfig *config);
 int is_left_black();
 int is_right_black();
 
-// Accalaration Movement
+// Movement
+void drive(int left_speed, int right_speed);
 void drive_ramped(int left_target, int right_target, int instant);
-void stop_driving();
-
+void stop_driving(int use_ramping);
 void update_ramping();
 
 // Orientation Movement
-void drive_until_black(int speed);
-void drive_until_white(int speed);
+void drive_until_black(int speed, int use_ramping);
+void drive_until_white(int speed, int use_ramping);
 
 //Rotation
-void turn_manual(int left_speed, int right_speed, int duration_ms);
-void turn_until_line(int speed, int direction);
+void turn_manual(int left_speed, int right_speed, int duration_ms, int use_ramping, int stop_at_end);
+int turn_until_line(int speed, int direction, int use_ramping);
 
-void line_follow_until_cross(int base_speed, int turn_speed);
+//Modular Line Following
+// target_intersections: How many cross-lines to pass before returning
+void follow_line(int fwd_speed, int fwd_turn, int back_turn, int target_intersections);
 
 #endif

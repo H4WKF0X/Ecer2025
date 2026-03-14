@@ -6,6 +6,9 @@
 build/
 bin/
 
+# configuration data 
+data/
+
 
 # IDE Specific (VS Code) 
 .vscode/
