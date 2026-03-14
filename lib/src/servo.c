@@ -1,7 +1,3 @@
-/*
- * servo.c
- */
-
 //greifarm:
 //position 104 ist ganz unten
 //position 1217 ist ganz oben
@@ -9,9 +5,12 @@
 #include <kipr/wombat.h>
 #include "servo.h"
 
-/*
- * Diese Funktion prueft, ob die gewuenschte Servo-Position innerhalb des erlaubten Bereichs liegt.
- * In position kommt der Zielwert hinein, und min_position sowie max_position geben die untere und obere Grenze an.
+/**
+ * @brief Internal helper to ensure a servo position stays within hardware or safety limits.
+ * @param position The requested position.
+ * @param min_position The minimum allowed position.
+ * @param max_position The maximum allowed position.
+ * @return The clamped position within [min, max].
  */
 static int clamp_servo_position(int position, int min_position, int max_position) {
     if (position < min_position) return min_position;
@@ -19,34 +18,41 @@ static int clamp_servo_position(int position, int min_position, int max_position
     return position;
 }
 
-/*
- * Diese Funktion schaltet alle angeschlossenen Servos ein, damit sie verwendet werden kC6nnen.
- * Es muessen keine Parameter uebergeben werden.
+/**
+ * @brief Enables power to all servo ports.
  */
 void servo_enable_all() {
     enable_servos();
 }
 
-/*
- * Diese Funktion schaltet alle angeschlossenen Servos wieder aus.
- * Es muessen keine Parameter uebergeben werden.
+/**
+ * @brief Disables power to all servo ports. Useful for manual positioning or saving battery.
  */
 void servo_disable_all() {
     disable_servos();
 }
 
-/*
- * Diese Funktion setzt einen Servo direkt auf eine bestimmte Position.
- * In port kommt der Anschluss des Servos hinein, in position der gewuenschte Wert und in min_position sowie max_position der erlaubte Bewegungsbereich.
+/**
+ * @brief Sets a servo to a specific position immediately.
+ * Blocks for SERVO_SET_DELAY_MS to allow the physical movement to complete.
+ * @param port The servo port index.
+ * @param position The target position.
+ * @param min_position Safety minimum.
+ * @param max_position Safety maximum.
  */
 void servo_set(int port, int position, int min_position, int max_position) {
     set_servo_position(port, clamp_servo_position(position, min_position, max_position));
-    msleep(300);
+    msleep(SERVO_SET_DELAY_MS);
 }
 
-/*
- * Diese Funktion bewegt einen Servo langsam und schrittweise zu einer Zielposition.
- * In port kommt der Servo-Anschluss hinein, in target die Zielposition, in step_delay_ms die Wartezeit pro Schritt und in min_position sowie max_position die erlaubten Grenzen.
+/**
+ * @brief Moves a servo to a target position using incremental steps for a smoother motion.
+ * Useful for preventing the robot from jerking or for handling fragile game pieces.
+ * @param port The servo port index.
+ * @param target The final desired position.
+ * @param step_delay_ms Time to wait between each increment (higher = slower).
+ * @param min_position Safety minimum.
+ * @param max_position Safety maximum.
  */
 void servo_move_smooth(int port, int target, int step_delay_ms, int min_position, int max_position) {
     target = clamp_servo_position(target, min_position, max_position);
@@ -57,14 +63,14 @@ void servo_move_smooth(int port, int target, int step_delay_ms, int min_position
 
     if (current < target) {
         while (current < target) {
-            current += 10;
+            current += SERVO_SMOOTH_STEP;
             if (current > target) current = target;
             set_servo_position(port, current);
             msleep(step_delay_ms);
         }
-    } else {
+    } else if (current > target) {
         while (current > target) {
-            current -= 10;
+            current -= SERVO_SMOOTH_STEP;
             if (current < target) current = target;
             set_servo_position(port, current);
             msleep(step_delay_ms);
