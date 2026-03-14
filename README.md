@@ -1,4 +1,4 @@
-# ECER 2025 Robotics Codebase
+# ECER 2026 Robotics Codebase
 
 This repository contains the C codebase for the ECER 2026 robotics competition, developed for the KIPR Wombat controller. The software architecture is designed with a strict focus on modularity, hardware abstraction, and dynamic on-device calibration.
 
@@ -12,6 +12,10 @@ The codebase is separated into distinct functional directories to separate reusa
     * `include/`: Header files defining the public APIs (`drive.h`, `servo.h`, `config_parser.h`).
     * `src/`: C implementations of the libraries.
 * `run/`: Contains the executable main programs (the actual contest routines) that utilise the libraries.
+
+## Video Reference
+
+The specific programs and contest routines demonstrated in our technical video can be found in the `run/` directory. These files contain the high-level logic that utilizes our modular libraries to perform the pipe collection and dispensing tasks shown.
 
 ## Core Features and Modularity
 
@@ -28,8 +32,6 @@ To account for changing ambient lighting conditions and potential hardware swaps
 Executing the `main_calibrate` program initiates an interactive setup routine on the device. The user is prompted to input current hardware ports, read live sensor values for black/white thresholds, and define the sensor offset geometry. This data is exported to `data/robot_config.txt`. 
 
 When the main contest program is executed, it parses this text file via the `config_parser` library. This ensures that sensor degradation, port changes, or lighting variations can be resolved in seconds without requiring the code to be recompiled.
-
-## Build and Deployment
 
 ## Build and Deployment
 
