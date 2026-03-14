@@ -8,8 +8,9 @@ void clear_input() {
 
 int main(void) {
     //Port variables
-    int left_motor, right_motor;
+    int left_motor, right_motor, aux_motor;
     int left_sensor, right_sensor;
+    int arm_servo, arm_min, arm_max;
     
     // Per-sensor variables
     int l_black, l_white, r_black, r_white;
@@ -29,12 +30,24 @@ int main(void) {
     printf("Enter Right Motor Port (0-3): ");
     scanf("%d", &right_motor);
 
+    printf("Enter Auxiliary Motor Port (0-3): ");
+    scanf("%d", &aux_motor);
+
     printf("Enter Left Sensor Port (analog 0-5): ");
     scanf("%d", &left_sensor);
 
     printf("Enter Right Sensor Port (analog 0-5): ");
     scanf("%d", &right_sensor);
     clear_input();
+
+    printf("\nEnter Arm Servo Port (0-3): ");
+    scanf("%d", &arm_servo);
+
+    printf("Enter Arm Servo MIN position (e.g., 104): ");
+    scanf("%d", &arm_min);
+
+    printf("Enter Arm Servo MAX position (e.g., 1217): "); 
+    scanf("%d", &arm_max);
 
     // STEP 2: SENSOR CALIBRATION
     printf("\n2. Sensor Calibration\n");
@@ -70,10 +83,16 @@ int main(void) {
     }
 
     fprintf(fp, "L_MOTOR %d\nR_MOTOR %d\n", left_motor, right_motor);
+    fprintf(fp, "AUX_MOTOR %d\n", aux_motor);
+
     fprintf(fp, "L_SENSOR_PORT %d\nR_SENSOR_PORT %d\n", left_sensor, right_sensor);
     fprintf(fp, "L_THRESH %d\nR_THRESH %d\n", l_thresh, r_thresh);
     fprintf(fp, "LBLACK_IS_LOW %d\nRBLACK_IS_LOW %d\n", lblack_is_low, rblack_is_low);
     fprintf(fp, "SENSOR_OFFSET %d\n", sensor_offset);
+
+    fprintf(fp, "ARM_SERVO %d\n", arm_servo);
+    fprintf(fp, "ARM_SERVO_MIN %d\n", arm_min);
+    fprintf(fp, "ARM_SERVO_MAX %d\n", arm_max);
 
     fclose(fp);
     printf("\nCalibration saved successfully!\n");
