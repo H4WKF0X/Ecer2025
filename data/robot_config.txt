@@ -1,9 +1,1 @@
-L_MOTOR 2
-R_MOTOR 1
-L_SENSOR_PORT 1
-R_SENSOR_PORT 0
-L_THRESH 3650
-R_THRESH 3250
-LBLACK_IS_LOW 0
-RBLACK_IS_LOW 0
-SENSOR_OFFSET -1
+run main_calibrate.c to get configuration values 

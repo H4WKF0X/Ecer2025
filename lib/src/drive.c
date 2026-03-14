@@ -15,7 +15,7 @@ void drive_init(RobotConfig *config) {
     tar_l = 0; tar_r = 0;
 }
 
-// Line Sensor Wrappers
+
 int is_left_black() {
     int val = analog(cfg->left_sensor_port);
     return cfg->left_black_is_low ? (val < cfg->left_threshold) : (val > cfg->left_threshold);
@@ -26,7 +26,7 @@ int is_right_black() {
     return cfg->right_black_is_low ? (val < cfg->right_threshold) : (val > cfg->right_threshold);
 }
 
-// step current speed toward target
+
 static int approach(int current, int target, int step) {
     if (current < target) {
         current += step;
@@ -114,7 +114,6 @@ void turn_manual(int left_speed, int right_speed, int duration_ms) {
     stop_driving(1);
 }
 
-// TODO: look over  
 void turn_until_line(int speed, int direction) {
     int l_black = is_left_black();
     int r_black = is_right_black();
